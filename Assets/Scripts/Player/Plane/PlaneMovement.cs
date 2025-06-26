@@ -4,12 +4,15 @@ namespace Player.Plane
 {
     public class PlaneMovement : PlayerBehavior
     {
-        // Field to keep track of the player's rigid body
+        #region References
+
         [SerializeField]
         private Rigidbody2D m_Rigidbody;
-
-        // Player's movement controller
         private PlayerControls controls;
+
+        #endregion
+
+        #region Main
 
         // This function runs when the object is initialized
         void Awake()
@@ -47,5 +50,7 @@ namespace Player.Plane
             // Move the player to the new position
             m_Rigidbody.MovePosition(newPos);
         }
+
+        #endregion
     }
 }

@@ -4,17 +4,26 @@ namespace Environment.Soccer
 {
     public class PuckBehavior : MonoBehaviour
     {
-        // Limits
+        #region Position Limits
+
         private const float k_LimitVertical = 5.5f;
         private const float k_LimitHorizontal = 9.3f;
 
-        // Reference
+        #endregion
+
+        #region References
+
         private Transform m_Transform;
         private Rigidbody2D m_Rigidbody;
+
+        #endregion
+
+        #region Main
 
         // Start is called at the start of the scene
         void Start()
         {
+            // Set the references through the game object's components
             m_Transform = gameObject.GetComponent<Transform>();
             m_Rigidbody = gameObject.GetComponent<Rigidbody2D>();
         }
@@ -27,21 +36,6 @@ namespace Environment.Soccer
                 // Reset its position
                 ResetPosition();
         }
-
-        // Resets the position and velocity of the ball
-        void ResetPosition()
-        {
-            m_Rigidbody.linearVelocity = Vector2.zero;
-            m_Rigidbody.MovePosition(Vector2.zero);
-        }
-
-        // Checks if the ball is outside the bounds and return a boolean value
-        bool IsOutsideBounds()
-        {
-            return m_Transform.position.x <= -k_LimitHorizontal || m_Transform.position.x >= k_LimitHorizontal ||
-                m_Transform.position.y <= -k_LimitVertical || m_Transform.position.y >= k_LimitVertical;
-        }
-
 
         // OnCollisionEnter2D is called when the object's collider detects a collision with another 2D collider
         void OnCollisionEnter2D(Collision2D collision)
@@ -56,5 +50,28 @@ namespace Environment.Soccer
                 ResetPosition();
             }
         }
+
+        #endregion
+
+        #region Helpers
+
+        // Resets the position and velocity of the ball
+        void ResetPosition()
+        {
+            // Set the velocity (movement speed) to 0
+            m_Rigidbody.linearVelocity = Vector2.zero;
+
+            // Set position to center
+            m_Rigidbody.MovePosition(Vector2.zero);
+        }
+
+        // Checks if the ball is outside the bounds and return a boolean value
+        bool IsOutsideBounds()
+        {
+            return m_Transform.position.x <= -k_LimitHorizontal || m_Transform.position.x >= k_LimitHorizontal ||
+                m_Transform.position.y <= -k_LimitVertical || m_Transform.position.y >= k_LimitVertical;
+        }
+
+        #endregion
     }
 }
